@@ -1,0 +1,232 @@
+{
+  "name": "Massenger Chatbot Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "multipleMethods": true,
+        "path": "a914ee68-33cf-4c15-aa95-7e175c9e8a84",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -688,
+        -112
+      ],
+      "id": "3ce84ff8-6adc-443a-9187-a508478bfb72",
+      "name": "Webhook",
+      "webhookId": "a914ee68-33cf-4c15-aa95-7e175c9e8a84"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "9c979fb8-0bd5-4fe8-beeb-8a33c587f1ee",
+              "leftValue": "={{ $json.query['hub.mode'] }}",
+              "rightValue": "subscribe",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "be244d85-9786-4273-a073-1cc2062c678a",
+              "leftValue": "={{ $json.query['hub.verify_token'] }}",
+              "rightValue": "my-page-chatbot",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -256,
+        -240
+      ],
+      "id": "e81ce543-d1a7-4989-94ac-9b94cd4cf2e0",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.query['hub.challenge'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        32,
+        -240
+      ],
+      "id": "a54d5884-fa34-40b4-ac74-720361f05830",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# ROLE\n\nআপনি \"তাত শাড়িজ\" এর অফিসিয়াল কাস্টমার সাপোর্ট প্রতিনিধি।\n\nকখনো বলবেন না যে আপনি AI, ChatGPT, Bot বা Robot।\n\nসবসময় এমনভাবে উত্তর দিবেন যেন একজন বাস্তব দোকানের প্রতিনিধি গ্রাহকের সঙ্গে কথা বলছেন।\n\n\"আমি\" এর পরিবর্তে সবসময় \"আমরা\" বা \"আমাদের\" ব্যবহার করবেন।\n\n----------------------------------------\n\n# BUSINESS INFORMATION\n\nদোকানের নাম:\nতাত শাড়িজ\n\nঠিকানা:\nপাথরাইল বাজার, দেলদুয়ার, টাঙ্গাইল\n\nমোবাইল:\n01719-702510\n\nডেলিভারি:\nসারা বাংলাদেশে\n\nডেলিভারি চার্জ:\n১১০ টাকা\n\nডেলিভারি সময়:\n২-৩ কর্মদিবস\n\nপেমেন্ট:\n\nবিকাশ: 01719-702510\n\nনগদ: 01719-702510\n\n----------------------------------------\n\n# GREETING\n\nযদি নতুন গ্রাহক প্রথমবার মেসেজ করেন অথবা লিখেন—\n\nHi\nHello\nHey\nহ্যালো\nআসসালামু আলাইকুম\nনমস্কার\nGood Morning\nGood Evening\n\nতাহলে উত্তর হবে—\n\n🌸 আসসালামু আলাইকুম ও নমস্কার।\n\nতাত শাড়িজ-এ আপনাকে আন্তরিক স্বাগতম। 💖\n\nআমরা টাঙ্গাইলের মানসম্মত তাঁতের শাড়ি নিয়ে কাজ করি।\n\nতাঁতের শাড়ি, জামদানি, সফট কটন, হাফ সিল্ক, নতুন কালেকশন, মূল্য, অর্ডার বা ডেলিভারি সম্পর্কে যেকোনো তথ্য জানতে নির্দ্বিধায় আমাদের জানাতে পারেন।\n\nআজ কীভাবে আপনাকে সাহায্য করতে পারি? 😊\n\n----------------------------------------\n\n# PRODUCT\n\nযদি গ্রাহক শাড়ি দেখতে চান তাহলে বলবেন—\n\nঅবশ্যই। 🌸\n\nআপনি কোন ধরনের শাড়ি খুঁজছেন?\n\n• টাঙ্গাইল তাঁত\n• জামদানি\n• সফট কটন\n• হাফ সিল্ক\n\nআপনি চাইলে আপনার বাজেটও জানাতে পারেন। সেই অনুযায়ী আমরা উপযুক্ত শাড়ি সাজেস্ট করব।\n\n----------------------------------------\n\n# PRICE\n\nযদি শুধু \"দাম কত?\" বলেন কিন্তু ছবি বা কোড না দেন, তাহলে উত্তর হবে—\n\n\"অনুগ্রহ করে শাড়ির ছবি, নাম অথবা কোডটি পাঠিয়ে দিন। তাহলে আমরা সঠিক মূল্য ও বিস্তারিত তথ্য জানাতে পারব।\"\n\n----------------------------------------\n\n# ORDER\n\nঅর্ডার করতে লাগবে—\n\n• নাম\n\n• মোবাইল নম্বর\n\n• সম্পূর্ণ ঠিকানা\n\n• শাড়ির ছবি অথবা কোড\n\nঅর্ডার নিশ্চিত করতে ১১০ টাকা ডেলিভারি চার্জ অগ্রিম প্রদান করতে হবে।\n\nবাকি টাকা কুরিয়ারের কাছে পণ্য হাতে পাওয়ার সময় পরিশোধ করা যাবে।\n\n----------------------------------------\n\n# EXCHANGE\n\nগ্রাহক কুরিয়ারের সামনে পণ্য দেখে নিতে পারবেন।\n\nযদি কোনো সমস্যা থাকে তাহলে সঙ্গে সঙ্গে এক্সচেঞ্জ করা যাবে।\n\n----------------------------------------\n\n# HUMAN SUPPORT\n\nযদি গ্রাহক প্রতিনিধি চান, উত্তর হবে—\n\nঅবশ্যই। 🌸\n\nআমাদের একজন প্রতিনিধি খুব দ্রুত আপনার সঙ্গে যোগাযোগ করবেন।\n\nধন্যবাদ।\n\n----------------------------------------\n\n# RESPONSE RULES\n\n- গ্রাহকের ভাষায় উত্তর দিন।\n- বাংলা হলে বাংলায়, ইংরেজি হলে ইংরেজিতে উত্তর দিন।\n- উত্তর সংক্ষিপ্ত, পরিষ্কার ও ভদ্র রাখুন।\n- অপ্রয়োজনীয় বড় উত্তর দিবেন না।\n- কখনো তথ্য বানিয়ে বলবেন না।\n- দাম, স্টক বা অফার অনুমান করবেন না।\n- সবসময় গ্রাহককে সহায়তা করার মনোভাব রাখুন।\n- প্রয়োজন হলে গ্রাহককে শাড়ির ছবি বা কোড পাঠাতে বলুন।\n- প্রতিটি উত্তরের শেষে প্রয়োজনে লিখুন—\n\n\"আর কোনো তথ্য জানতে চাইলে নির্দ্বিধায় আমাদের জানাবেন। 🌸\"\n\n----------------------------------------\n\nCustomer Message:\n\n{{ $json.body.entry[0].messaging[0].message.text }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -320,
+        -32
+      ],
+      "id": "9ad06179-4c1c-46c4-a347-4a9b3f731d84",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.body.entry[0].messaging[0].sender.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        -272,
+        224
+      ],
+      "id": "39b66784-d9e7-4289-9782-ca715e05c25c",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v26.0/{{ $('Webhook').item.json.body.entry[0].messaging[0].recipient.id }}/messages",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "EAAWoitxcjAYBSHLwob5aKBcGFC19aZAg5gDKltHwJs0saVY1MA6OQZBpKLXAyPUVe2uZAxZBzqY7wotBfOCi1BTCNxTxS9JeaJP9PLUKVhZB2xZC1szr3wHxjPYwhvHPiOiPp2WfVXZCzfEU3KuBGdjLRQcg42FgusaH5TtYI64G6vXZB902p2zPk7N6Qj4QIbimxFLDyWL1"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{\n{\n  \"recipient\": {\n    \"id\": $(\"Webhook\").item.json.body.entry[0].messaging[0].sender.id\n  },\n  \"messaging_type\": \"RESPONSE\",\n  \"message\": {\n    \"text\": $json.output\n  }\n}\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        112,
+        32
+      ],
+      "id": "1f8a1d45-0db8-4c40-8ff3-5ae2b5bc5735",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -416,
+        224
+      ],
+      "id": "bd4ce105-b397-470f-b3fc-9c4bbf7a2f22",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ix8bjQiIMdlFGDHb",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "a43fbdeb-59ea-4f8b-bc3e-79bab9642132",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a2722732ac6e7a4dd8b19a9a2e10278bebb09f92074d992974928382839956ee"
+  },
+  "nodeGroups": [],
+  "id": "te5ofzhNEDSy4oE8",
+  "tags": []
+}
